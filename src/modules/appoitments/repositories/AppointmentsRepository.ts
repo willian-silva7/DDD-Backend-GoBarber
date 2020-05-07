@@ -1,6 +1,6 @@
 // import { isEqual } from 'date-fns';
 import { EntityRepository, Repository } from 'typeorm';
-import Appointment from '../models/Appointment';
+import Appointment from '@modules/appoitments/infra/typeorm/entities/Appointment';
 // Datat Transfer Object
 // interface CreateAppointmentDTO {
 //   provider: string;
