@@ -31,15 +31,21 @@ describe('CreateUser', () => {
     );
 
     await createUser.execute({
-      name: 'willian',
-      email: 'will@example.com',
+      name: 'john Doe',
+      email: 'johndoe@example.com',
+      password: '123123',
+    });
+
+    await createUser.execute({
+      name: 'john Doe2',
+      email: 'johndoe@example.com',
       password: '123123',
     });
 
     expect(
       createUser.execute({
-        name: 'willian',
-        email: 'will@hotmail.com',
+        name: 'john Doe2',
+        email: 'johndoe@example.com',
         password: '123123',
       }),
     ).rejects.toBeInstanceOf(AppError);
