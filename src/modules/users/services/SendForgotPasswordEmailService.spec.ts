@@ -32,7 +32,7 @@ describe('SendForgotPassword', () => {
       password: '123456',
     });
 
-    await sendForgotPasswordEmail.execute2({
+    await sendForgotPasswordEmail.execute({
       email: 'johndoe@example.com',
     });
 
