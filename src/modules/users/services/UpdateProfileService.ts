@@ -18,7 +18,7 @@ class UpdateProfile {
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
 
-    @inject('HasProvider')
+    @inject('HashProvider')
     private hashProvider: IHashProvider,
   ) {}
 
@@ -52,8 +52,8 @@ class UpdateProfile {
 
     if (password && old_password) {
       const checkOldPassword = await this.hashProvider.compareHash(
-        user.password,
         old_password,
+        user.password,
       );
 
       if (!checkOldPassword) {

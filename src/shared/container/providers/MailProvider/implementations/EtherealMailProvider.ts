@@ -22,7 +22,7 @@ export default class EtherealMailProvider implements IMAilProvider {
           pass: account.pass,
         },
       });
-      console.log(account);
+      // console.log(account);
       this.client = transporter;
     });
   }

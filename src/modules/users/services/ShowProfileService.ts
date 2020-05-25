@@ -5,10 +5,6 @@ import IUsersRepository from '../repositories/IUserRepository';
 
 interface IRequest {
   user_id: string;
-  name: string;
-  email: string;
-  old_password?: string;
-  password?: string;
 }
 
 @injectable()
