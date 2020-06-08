@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 import CreateUserServices from '@modules/users/services/CreateUserService';
 
 import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarService';
+import { classToClass } from 'class-transformer';
 
 export default class UsersControllers {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -17,9 +18,7 @@ export default class UsersControllers {
         password,
       });
 
-      delete user.password;
-
-      return response.json(user);
+      return response.json(classToClass(user));
     } catch (err) {
       return response.status(400).json({ error: err.message });
     }
@@ -35,7 +34,7 @@ export default class UsersControllers {
       user_id: request.user.id,
       avatarFilename: request.file.filename,
     });
-    delete user.password;
-    return response.json(user);
+
+    return response.json(classToClass(user));
   }
 }
