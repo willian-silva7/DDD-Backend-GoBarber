@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import mime from 'mime';
 import uploadConfig from '@config/upload';
 import aws, { S3 } from 'aws-sdk';
 import IStorageProvider from '../models/IStorageProvider';
@@ -16,16 +17,26 @@ class DiskStorageProvider implements IStorageProvider {
   public async saveFile(file: string): Promise<string> {
     const originalPath = path.resolve(uploadConfig.tmpFolder, file);
 
-    const fileContent = await fs.promises.readFile(originalPath, {
-      encoding: 'utf-8',
-    });
+    const ContentType = mime.getType(originalPath);
 
-    await this.client.putObject({
-      Bucket: 'app-gobarber', // or the name of your bucket
-      Key: file,
-      ACL: 'public-read',
-      Body: fileContent,
-    }).promise;
+    if (!ContentType) {
+      throw new Error('File not found');
+    }
+
+    const fileContent = await fs.promises.readFile(originalPath);
+
+    await this.client
+      .putObject({
+        Bucket: uploadConfig.config.aws.bucket, // or the name of your bucket
+        Key: file,
+        ACL: 'public-read',
+        Body: fileContent,
+        ContentType,
+        ContentDisposition: `inline; filename=${file}`,
+      })
+      .promise();
+
+    await fs.promises.unlink(originalPath);
 
     return file;
   }

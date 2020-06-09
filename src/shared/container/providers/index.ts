@@ -9,6 +9,7 @@
 import './StorageProvider';
 import './MailTemplateProvider';
 import './MailProvider';
+import './CacheProvider';
 
 // container.registerSingleton<IStorageProvider>(
 //   'StorageProvider',
