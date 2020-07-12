@@ -4,6 +4,7 @@ import { injectable, inject } from 'tsyringe';
 import IUsersRepository from '@modules/users/repositories/IUserRepository';
 
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import { classToClass } from 'class-transformer';
 
 interface IRequest {
   user_id: string;
@@ -29,7 +30,10 @@ class ListProvidersSevice {
         except_user_id: user_id,
       });
 
-      await this.cacheProvider.save(`provider-list:${user_id}`, users);
+      await this.cacheProvider.save(
+        `provider-list:${user_id}`,
+        classToClass(users),
+      );
     }
 
     return users;
